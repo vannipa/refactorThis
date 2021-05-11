@@ -1,5 +1,5 @@
 # refactorThis
-Some ABAP code to be refactored (use the S4H)
+Some ABAP code to be refactored (advise: use the S4H)
 
 🧿 Goal: try to use as little '.'-s as possible!
 
