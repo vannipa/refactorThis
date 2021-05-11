@@ -1,0 +1,37 @@
+*&---------------------------------------------------------------------*
+*& Report zabap_geo
+*&---------------------------------------------------------------------*
+*&
+*&---------------------------------------------------------------------*
+REPORT zabap_geo.
+TYPES: BEGIN OF ty_s_string,
+         string TYPE string,
+       END OF ty_s_string,
+       ty_t_string TYPE TABLE OF ty_s_string WITH DEFAULT KEY.
+
+DATA lo_calender_helper TYPE REF TO zcl_calendar_helper.
+DATA lv_month TYPE char10.
+
+CREATE OBJECT lo_calender_helper.
+
+lv_month = lo_calender_helper->get_month_text_by_month_numb( iv_month_number = 05 ).
+DATA(ls_calendar) = lo_calender_helper->get_calendar_activities( iv_month = 05
+                                                                 iv_year  = 2021 ).
+DATA(lt_agenda) = VALUE string_table(  ).
+DATA(ls_agenda) = |{ lo_calender_helper->get_calender_user_name( sy-uname ) }|.
+ls_agenda = |{ ls_agenda } - Agenda for { lv_month } { sy-datum(4) }|.
+APPEND ls_agenda TO lt_agenda.
+CLEAR ls_agenda.
+
+LOOP AT ls_calendar-days ASSIGNING FIELD-SYMBOL(<days>).
+  ls_agenda = |{ <days>-day }/{ ls_calendar-month }/{ ls_calendar-year } |.
+  LOOP AT <days>-activities ASSIGNING FIELD-SYMBOL(<activities>).
+    ls_agenda = |{ ls_agenda }{ <activities>-activity_begin }-{ <activities>-activity_end } { <activities>-activity }|.
+    IF <activities>-activity CS |Super Awesome|.
+      ls_agenda = |{ ls_agenda } OMG OMG OMG!!!|.
+    ELSEIF <activities>-activity CS |COVID Vaccination|.
+      ls_agenda = |{ ls_agenda } =>Very important! Do not forget!|.
+    ENDIF.
+    APPEND ls_agenda TO lt_agenda.
+  ENDLOOP.
+ENDLOOP.
