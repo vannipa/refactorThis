@@ -1,6 +1,5 @@
 REPORT zabap_geo.
 
-
 DATA: lt_agenda          TYPE string_table,
       ls_agenda          TYPE LINE OF string_table,
       ls_day             TYPE zcl_calendar_helper=>ty_s_day,
@@ -27,3 +26,5 @@ LOOP AT ls_calendar-days INTO ls_day WHERE day = 17.
   ENDLOOP.
 ENDLOOP.
 cl_demo_output=>write( lt_agenda ).
+
+
