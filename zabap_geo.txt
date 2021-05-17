@@ -1,4 +1,10 @@
-REPORT zabap_geo.
+*&---------------------------------------------------------------------*
+*& Report zabap_geo_breezy
+*&---------------------------------------------------------------------*
+*&
+*&---------------------------------------------------------------------*
+REPORT zabap_geo_breezy.
+
 
 DATA: lt_agenda          TYPE string_table,
       ls_agenda          TYPE LINE OF string_table,
@@ -26,5 +32,3 @@ LOOP AT ls_calendar-days INTO ls_day WHERE day = 17.
   ENDLOOP.
 ENDLOOP.
 cl_demo_output=>write( lt_agenda ).
-
-
